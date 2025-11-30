@@ -19,17 +19,19 @@ namespace Bai03
             toolStripStatusLabel1.Text = "Hôm nay là ngày " + DateTime.Now.ToString("dd/MM/yyyy") + "-" + "Bây giờ là " + DateTime.Now.ToString("hh:mm:ss tt");
         }
 
-
+        // Sự kiện khi nhấn vào menu Exit
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        // Sự kiện khi nhấn vào menu Open
         private void Open_Click(object sender, EventArgs e)
         {
+            // Mở hộp thoại chọn file
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "Chọn file để mở";
             openFileDialog.Filter = "Media files (*.avi;*.mpeg;*.wav;*.midi;*.mp4;*.mp3)|*.avi;*.mpeg;*.wav;*.midi;*.mp4;*.mp3";
+            // Hiển thị hộp thoại và kiểm tra nếu người dùng chọn file
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 axWindowsMediaPlayer1.URL = openFileDialog.FileName;
@@ -37,7 +39,7 @@ namespace Bai03
             }
         }
 
-
+        // Sự kiện khi Form được load
         private void Form_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -48,13 +50,12 @@ namespace Bai03
             axWindowsMediaPlayer1.uiMode = "full";
             axWindowsMediaPlayer1.settings.autoStart = false;
             axWindowsMediaPlayer1.Dock = DockStyle.Fill;
-
         }
+        // Sự kiện cập nhật thời gian trên StatusStrip
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = "Hôm nay là ngày " + DateTime.Now.ToString("dd/MM/yyyy") + "-" + "Bây giờ là " + DateTime.Now.ToString("hh:mm:ss tt");
-        }
-
-       
+        }     
     }
 }
