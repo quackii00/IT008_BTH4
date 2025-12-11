@@ -28,19 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnCopy = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnDestAddress = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.textBoxSourceAddress = new System.Windows.Forms.TextBox();
+            this.textBoxDestAddress = new System.Windows.Forms.TextBox();
+            this.btnSourceAddress = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusCopy = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -49,7 +51,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.btnCopy);
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.groupBox1.Location = new System.Drawing.Point(42, 47);
@@ -58,6 +60,22 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Sao chép tập tin";
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopy.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopy.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnCopy.Location = new System.Drawing.Point(361, 163);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(208, 44);
+            this.btnCopy.TabIndex = 1;
+            this.btnCopy.Text = "Sao Chép";
+            this.btnCopy.UseVisualStyleBackColor = false;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -68,12 +86,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.01068F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.68565F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.185054F));
-            this.tableLayoutPanel1.Controls.Add(this.button2, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnDestAddress, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxSourceAddress, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxDestAddress, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnSourceAddress, 2, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(27, 43);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -81,6 +99,20 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(843, 100);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // btnDestAddress
+            // 
+            this.btnDestAddress.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.btnDestAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDestAddress.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDestAddress.Location = new System.Drawing.Point(773, 50);
+            this.btnDestAddress.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.btnDestAddress.Name = "btnDestAddress";
+            this.btnDestAddress.Size = new System.Drawing.Size(70, 38);
+            this.btnDestAddress.TabIndex = 5;
+            this.btnDestAddress.Text = "...";
+            this.btnDestAddress.UseVisualStyleBackColor = false;
+            this.btnDestAddress.Click += new System.EventHandler(this.btnDestAddress_Click);
             // 
             // label1
             // 
@@ -106,64 +138,37 @@
             this.label2.Text = "Đường Dẫn Thư Mục Đích";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBox1
+            // textBoxSourceAddress
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(315, 3);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(455, 44);
-            this.textBox1.TabIndex = 2;
+            this.textBoxSourceAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxSourceAddress.Location = new System.Drawing.Point(315, 3);
+            this.textBoxSourceAddress.Multiline = true;
+            this.textBoxSourceAddress.Name = "textBoxSourceAddress";
+            this.textBoxSourceAddress.Size = new System.Drawing.Size(455, 44);
+            this.textBoxSourceAddress.TabIndex = 2;
             // 
-            // textBox2
+            // textBoxDestAddress
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(315, 53);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(455, 44);
-            this.textBox2.TabIndex = 3;
+            this.textBoxDestAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxDestAddress.Location = new System.Drawing.Point(315, 53);
+            this.textBoxDestAddress.Multiline = true;
+            this.textBoxDestAddress.Name = "textBoxDestAddress";
+            this.textBoxDestAddress.Size = new System.Drawing.Size(455, 44);
+            this.textBoxDestAddress.TabIndex = 3;
             // 
-            // button1
+            // btnSourceAddress
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(773, 0);
-            this.button1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 38);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button2.Location = new System.Drawing.Point(773, 50);
-            this.button2.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(70, 38);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "...";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button3.Location = new System.Drawing.Point(361, 163);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(208, 44);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Sao Chép";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnSourceAddress.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.btnSourceAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSourceAddress.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnSourceAddress.Location = new System.Drawing.Point(773, 0);
+            this.btnSourceAddress.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.btnSourceAddress.Name = "btnSourceAddress";
+            this.btnSourceAddress.Size = new System.Drawing.Size(70, 38);
+            this.btnSourceAddress.TabIndex = 4;
+            this.btnSourceAddress.Text = "...";
+            this.btnSourceAddress.UseVisualStyleBackColor = false;
+            this.btnSourceAddress.Click += new System.EventHandler(this.btnSourceAddress_Click);
             // 
             // groupBox2
             // 
@@ -191,27 +196,29 @@
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 486);
+            this.toolStripStatusCopy});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 445);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(987, 42);
+            this.statusStrip1.Size = new System.Drawing.Size(1020, 42);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // toolStripStatusCopy
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(192, 32);
-            this.toolStripStatusLabel1.Text = "Đang Sao Chép :";
+            this.toolStripStatusCopy.Name = "toolStripStatusCopy";
+            this.toolStripStatusCopy.Size = new System.Drawing.Size(192, 32);
+            this.toolStripStatusCopy.Text = "Đang Sao Chép :";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(987, 528);
+            this.ClientSize = new System.Drawing.Size(1020, 487);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sao chép tập tin";
@@ -232,15 +239,16 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnDestAddress;
+        private System.Windows.Forms.TextBox textBoxSourceAddress;
+        private System.Windows.Forms.TextBox textBoxDestAddress;
+        private System.Windows.Forms.Button btnSourceAddress;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCopy;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
