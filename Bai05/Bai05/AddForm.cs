@@ -19,13 +19,26 @@ namespace Bai05
 
         private void Add_Click(object sender, EventArgs e)
         {
+            if (textBoxMaSV == null || textBoxMaSV.Text.Trim() == "" ||
+                textBoxHoTen == null || textBoxHoTen.Text.Trim() == "" ||
+                comboBoxKhoa == null || comboBoxKhoa.Text.Trim() == "" ||
+                textBoxDiemTB == null || textBoxDiemTB.Text.Trim() == "")
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin.");
+                return;
+            }
+            if (!double.TryParse(textBoxDiemTB.Text, out double diemTB) || diemTB < 0 || diemTB > 10)
+            {
+                MessageBox.Show("Điểm trung bình phải là một số từ 0 đến 10.");
+                return;
+            }
             try
             {
                 SinhVienDAL dal = new SinhVienDAL();
-                dal.ThemSinhVien(textBoxMaSV.Text, textBoxHoTen.Text, comboBoxKhoa.Text, double.Parse(textBoxDiemTB.Text));
+                dal.AddSinhVien(textBoxMaSV.Text, textBoxHoTen.Text, comboBoxKhoa.Text, double.Parse(textBoxDiemTB.Text));
 
                 MessageBox.Show("Thêm thành công!");
-                this.DialogResult = DialogResult.OK; // báo cho MainForm biết đã thêm
+                this.DialogResult = DialogResult.OK; 
                 this.Close();
             }
             catch (Exception ex)

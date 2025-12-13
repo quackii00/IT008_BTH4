@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Data;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bai05
 {
@@ -37,7 +33,7 @@ namespace Bai05
             }
         }
 
-        public void ThemSinhVien(string maSV, string hoTen, string khoa, double diemTB)
+        public void AddSinhVien(string maSV, string hoTen, string khoa, double diemTB)
         {
             using (var conn = new SQLiteConnection(connectionString))
             {
@@ -55,7 +51,7 @@ namespace Bai05
             }
         }
 
-        public DataTable LayDanhSachSinhVien()
+        public DataTable GetListOfSinhVien()
         {
             using (var conn = new SQLiteConnection(connectionString))
             {
