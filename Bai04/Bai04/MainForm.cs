@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Bai04
@@ -40,11 +32,8 @@ namespace Bai04
             }
             toolStripComboBoxSize.SelectedItem = 14;
 
-            richTextBox.Font = new Font("Tahoma", 14, FontStyle.Regular);
-
-         
+            richTextBox.Font = new Font("Tahoma", 14, FontStyle.Regular);         
         }
-        
         
         private void DinhDang_click(object sender, EventArgs e)
         {
@@ -56,8 +45,6 @@ namespace Bai04
                 toolStripComboBoxFont.SelectedItem = fontdialog.Font.Name;
                 toolStripComboBoxSize.SelectedItem = (int)Math.Round(fontdialog.Font.Size);
             }
-           
-           
         }
 
         private void new_click(object sender, EventArgs e)
@@ -66,6 +53,7 @@ namespace Bai04
             toolStripComboBoxFont.SelectedItem = "Tahoma";
             toolStripComboBoxSize.SelectedItem = 14;
             richTextBox.SelectionFont = new Font("Tahoma", 14, FontStyle.Regular);
+            currentFilePath = string.Empty;
         }
 
         private void Open_Click(object sender, EventArgs e)
@@ -82,23 +70,49 @@ namespace Bai04
                 {
                     richTextBox.LoadFile(fidialog.FileName, RichTextBoxStreamType.PlainText);
                 }
+                currentFilePath = fidialog.FileName;
             }
 
         }
+
+        string currentFilePath = string.Empty; 
 
         private void save_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Rich Text Files (*.rtf)|*.rtf|Text Files (*.txt)|*.txt";
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if (string.IsNullOrEmpty(currentFilePath))
             {
-                if (sfd.FileName.EndsWith(".rtf"))
-                    richTextBox.SaveFile(sfd.FileName, RichTextBoxStreamType.RichText);
-                else
-                    richTextBox.SaveFile(sfd.FileName, RichTextBoxStreamType.PlainText);
-                MessageBox.Show("Lưu văn bản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "Rich Text Files (*.rtf)|*.rtf|Text Files (*.txt)|*.txt";
+                    sfd.Title = "Lưu văn bản";
+
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        currentFilePath = sfd.FileName; 
+                        SaveToFile(currentFilePath);
+                        MessageBox.Show("Lưu văn bản thành công!", "Thông báo",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            else
+            {
+            
+                SaveToFile(currentFilePath);
+                MessageBox.Show("Lưu văn bản thành công!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void SaveToFile(string filePath)
+        {
+            RichTextBoxStreamType streamType = filePath.EndsWith(".rtf")
+                ? RichTextBoxStreamType.RichText
+                : RichTextBoxStreamType.PlainText;
+
+            richTextBox.SaveFile(filePath, streamType);
+        }
+
 
         private void Exit_Click(object sender, EventArgs e)
         {
@@ -112,6 +126,7 @@ namespace Bai04
             FontStyle newStyle = currentFont.Style ^ style;
             richTextBox.SelectionFont = new Font(currentFont, newStyle);
         }
+
         private void Bold_Click(object sender, EventArgs e)
         {
             if (BtoolStripButton.Checked)
@@ -157,5 +172,7 @@ namespace Bai04
             FontStyle style = CurrentFont.Style;
             richTextBox.SelectionFont = new Font(fontName, fontsize, style);
         }
+
+        
     }
 }
