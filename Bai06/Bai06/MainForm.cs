@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Bai06
 {
@@ -18,8 +11,6 @@ namespace Bai06
         {
             InitializeComponent();
         }
-
-      
 
         private void btnDestAddress_Click(object sender, EventArgs e)
         {
@@ -60,25 +51,38 @@ namespace Bai06
             string[] files = Directory.GetFiles(sourcePath);
             progressBar1.Value = 0;
             progressBar1.Maximum = files.Length;
-
-            foreach (string file in files)
+            if (files.Length == 0)
+                MessageBox.Show("Không có tập tin nào để sao chép!");
+            else
             {
-                string fileName = Path.GetFileName(file);
-                string destFile = Path.Combine(destPath, fileName);
-                string destpathfile = Path.Combine(destPath, fileName);
-                toolStripStatusCopy.Text = "Đang sao chép: " + destpathfile;
-                toolTip1.SetToolTip(progressBar1, destpathfile);
+                await Task.Run(() =>
+                {
+                    int count = 0;
+                    foreach (string file in files)
+                    {
+                        string fileName = Path.GetFileName(file);
+                        string destFile = Path.Combine(destPath, fileName);
+                        string destpathfile = Path.Combine(destPath, fileName);
+                        File.Copy(file, destFile, true);
 
+                        count++;
+                        this.Invoke(new Action(() =>
+                        {
+                            progressBar1.Value = count;
+                            toolStripStatusCopy.Text = $"Đang sao chép: {destpathfile}";
+                            toolTip1.SetToolTip(progressBar1, destpathfile);
+                        }));
+                    }
+                });
 
-                await Task.Run(() => File.Copy(file, destFile, true));
-
-                progressBar1.Value++;
-                await Task.Delay(50); 
+                toolStripStatusCopy.Text = "Hoàn tất!";
+                MessageBox.Show("Sao chép hoàn thành!");
+            
             }
-
-            toolStripStatusCopy.Text = "Hoàn tất!";
+            toolTip1.SetToolTip(progressBar1, "Không có tập tin nào đang sao chép");
+            toolStripStatusCopy.Text = "Đang sao chép: ";
+            progressBar1.Value = 0;
             btnCopy.Enabled = true;
-            MessageBox.Show("Sao chép hoàn thành!");
         }
     }
 }
